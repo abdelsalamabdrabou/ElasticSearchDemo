@@ -1,3 +1,7 @@
+using ElasticSearchDemo.Models;
+using ElasticSearchDemo.Services;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<ElasticsearchService>();
+
+builder.Host.UseSerilog((context, configs) =>
+{
+    configs.ReadFrom.Configuration(context.Configuration);
+});
 
 var app = builder.Build();
 
